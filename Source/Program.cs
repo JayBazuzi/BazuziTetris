@@ -12,19 +12,46 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            var tests = new Tests();
-            tests.Test1();
         }
     }
 
     public class Tests
     {
         [Fact]
-        public void Test1()
+        public void PieceShouldDropOneOnTick()
         {
             Game game = new Game();
             game.OnTick();
             Assert.Equal(15, game.CurrentPiece.Location.X);
+        }
+    }
+
+    public class RotationTests
+    {
+        [Fact]
+        public void OriginalOrientationShouldBeNorth()
+        {
+            Game game = new Game();
+            Assert.Equal(Orientation.North, game.CurrentPiece.Orientation);
+        }
+
+        [Fact]
+        public void OneRotateShouldBeEast()
+        {
+            Game game = new Game();
+            game.CurrentPiece.Rotate();
+            Assert.Equal(Orientation.East, game.CurrentPiece.Orientation);
+        }
+
+        [Fact]
+        public void FourRotateShouldBeNorthAgain()
+        {
+            Game game = new Game();
+            game.CurrentPiece.Rotate();
+            game.CurrentPiece.Rotate();
+            game.CurrentPiece.Rotate();
+            game.CurrentPiece.Rotate();
+            Assert.Equal(Orientation.North, game.CurrentPiece.Orientation);
         }
     }
 
@@ -33,7 +60,9 @@ namespace ConsoleApplication1
         North,
         East,
         South,
-        West
+        West,
+
+        Count
     }
 
     class Game
@@ -70,6 +99,12 @@ namespace ConsoleApplication1
         internal void DropOneStep()
         {
             this.Location.X--;
+        }
+
+        internal void Rotate()
+        {
+            this.Orientation++;
+            if (this.Orientation == Orientation.Count) this.Orientation = 0;
         }
     }
 }
