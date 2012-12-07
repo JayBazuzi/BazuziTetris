@@ -49,7 +49,7 @@ namespace ConsoleApplication1
 
         public void OnTick()
         {
-            this.CurrentPiece.Location.X--;
+            this.CurrentPiece.DropOneStep();
         }
     }
 
@@ -65,6 +65,11 @@ namespace ConsoleApplication1
 
         public class I : Piece
         {
+        }
+
+        internal void DropOneStep()
+        {
+            this.Location.X--;
         }
     }
 }
