@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace ConsoleApplication1
 {
@@ -16,13 +17,14 @@ namespace ConsoleApplication1
         }
     }
 
-    class Tests
+    public class Tests
     {
+        [Fact]
         public void Test1()
         {
             Game game = new Game();
             game.OnTick();
-            Debug.Assert(game.CurrentPiece.Location.X == 15);
+            Assert.Equal(15, game.CurrentPiece.Location.X);
         }
     }
 
@@ -36,14 +38,11 @@ namespace ConsoleApplication1
 
     class Game
     {
-        public readonly Well Well = new Well();
-
         public Piece CurrentPiece;
 
         public Game()
         {
             this.CurrentPiece = new Piece.I();
-            this.CurrentPiece.Orientation = Orientation.North;
             this.CurrentPiece.Location.X = 16;
             this.CurrentPiece.Location.Y = 5;
         }
@@ -54,11 +53,6 @@ namespace ConsoleApplication1
         }
     }
 
-    class Well
-    {
-        public Block[,] Blocks = new Block[10, 20];
-    }
-
     /// <summary>
     /// A 2d shape composed of 4 blocks
     /// </summary>
@@ -66,15 +60,11 @@ namespace ConsoleApplication1
     {
         protected Piece() { }
 
-        public Orientation Orientation;
+        public Orientation Orientation = Orientation.North;
         public Location Location;
 
         public class I : Piece
         {
         }
-    }
-
-    class Block
-    {
     }
 }
