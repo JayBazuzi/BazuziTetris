@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{F6AC8F24-5D99-4E2A-9319-EFF2FECBD0FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BazuziTetris", "Source\BazuziTetris.csproj", "{F6AC8F24-5D99-4E2A-9319-EFF2FECBD0FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
