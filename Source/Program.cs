@@ -18,6 +18,16 @@ namespace ConsoleApplication1
     public class Tests
     {
         [Fact]
+        public void WellShouldStartEmpty()
+        {
+            Game game = new Game();
+            foreach (var item in game.Well.Cells)
+            {
+                Assert.False(item);
+            }
+        }
+
+        [Fact]
         public void PieceShouldDropOneOnTick()
         {
             Game game = new Game();
@@ -65,9 +75,16 @@ namespace ConsoleApplication1
         Count
     }
 
+    class Well
+    {
+        public bool[,] Cells = new bool[10, 20];
+    }
+
     class Game
     {
         public Piece CurrentPiece;
+
+        public readonly Well Well = new Well();
 
         public Game()
         {
