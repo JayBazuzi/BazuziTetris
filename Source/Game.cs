@@ -28,7 +28,7 @@ namespace BazuziTetris
 
         IEnumerable<Piece> comingPieces;
 
-        public Game() : this(new PieceStream()) {}
+        public Game() : this(new PieceStream()) { }
 
         public Game(IEnumerable<Piece> pieces)
         {
@@ -51,13 +51,9 @@ namespace BazuziTetris
 
         internal void DropAllTheWay()
         {
-            while (this.CurrentPieceLocation.Y > 0)
+            while (this.CurrentPieceDropOneStep())
             {
-                this.CurrentPieceDropOneStep();
             }
-
-            TransferToWell(this.CurrentPiece);
-            NextPiece();
         }
 
         private void NextPiece()
@@ -78,9 +74,18 @@ namespace BazuziTetris
             return gameBitmap.ToString();
         }
 
-        internal void CurrentPieceDropOneStep()
+        internal bool CurrentPieceDropOneStep()
         {
             this.CurrentPieceLocation.Y--;
+
+            if (this.CurrentPieceLocation.Y == 0)
+            {
+                TransferToWell(this.CurrentPiece);
+                NextPiece();
+                return false;
+            }
+
+            return true;
         }
 
         internal void MoveLeft()
