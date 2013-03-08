@@ -33,7 +33,6 @@ namespace BazuziTetris
                         Assert.False(game.Well[x, y], game.Well.ToString());
                     }
                 }
-
             }
         }
 

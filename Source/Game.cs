@@ -12,9 +12,28 @@ namespace BazuziTetris
 
         public readonly Bitmap Well = new Bitmap(10, 20);
 
-        public Game()
+        class PieceStream : IEnumerable<Piece>
         {
-            this.CurrentPiece = new Piece.I();
+            public IEnumerator<Piece> GetEnumerator()
+            {
+                while (true)
+                    yield return new Piece.I();
+            }
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        IEnumerable<Piece> comingPieces;
+
+        public Game() : this(new PieceStream()) {}
+
+        public Game(IEnumerable<Piece> pieces)
+        {
+            this.comingPieces = pieces;
+            this.CurrentPiece = comingPieces.First(); comingPieces = comingPieces.Skip(1);
             this.CurrentPieceLocation = new Location(5, 16);
         }
 
