@@ -8,9 +8,7 @@
 
         public Game()
         {
-            this.CurrentPiece = new Piece.I(this.Well.Cells.GetLength(0), this.Well.Cells.GetLength(1) / 2);
-            this.CurrentPiece.Location.X = 16;
-            this.CurrentPiece.Location.Y = 5;
+            this.CurrentPiece = new Piece.I(new Location(16, 5));
         }
 
         public void OnTick()
