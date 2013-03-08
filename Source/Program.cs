@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ConsoleApplication1
+namespace BazuziTetris
 {
     class Program
     {
