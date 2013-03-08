@@ -38,15 +38,7 @@ namespace BazuziTetris
 
         public void OnTick()
         {
-            if (this.CurrentPieceLocation.Y == 0)
-            {
-                TransferToWell(this.CurrentPiece);
-            }
-
-            else
-            {
-                this.CurrentPieceDropOneStep();
-            }
+            this.CurrentPieceDropOneStep();
         }
 
         internal void DropAllTheWay()
