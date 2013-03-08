@@ -5,30 +5,30 @@
     /// </summary>
     abstract class Piece
     {
-        protected Piece(Location location, int width, int height)
+        protected Piece(Bitmap bitmap)
         {
-            this.Location = location;
-            this.Bitmap = new Bitmap(width, height);
+            this.Bitmap = bitmap;
         }
 
-        public Location Location;
         public readonly Bitmap Bitmap;
 
         public class I : Piece
         {
-            public I(Location location)
-                : base(location, 1, 4)
-            {
-                this.Bitmap[0, 0] = true;
-                this.Bitmap[0, 1] = true;
-                this.Bitmap[0, 2] = true;
-                this.Bitmap[0, 3] = true;
-            }
-        }
+            static Bitmap s_bitmap;
 
-        public void DropOneStep()
-        {
-            this.Location.Y--;
+            static I()
+            {
+                s_bitmap = new Bitmap(1, 4);
+                s_bitmap[0, 0] = true;
+                s_bitmap[0, 1] = true;
+                s_bitmap[0, 2] = true;
+                s_bitmap[0, 3] = true;
+            }
+
+            public I()
+                : base(s_bitmap.Copy())
+            {
+            }
         }
     }
 }

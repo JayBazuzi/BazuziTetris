@@ -23,7 +23,7 @@ namespace BazuziTetris
                 switch (consoleKeyInfo.Key)
                 {
                     case ConsoleKey.DownArrow:
-                        game.CurrentPiece.DropOneStep();
+                        game.CurrentPieceDropOneStep();
                         break;
 
                     case ConsoleKey.Spacebar:
