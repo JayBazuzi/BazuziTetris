@@ -74,18 +74,21 @@ namespace BazuziTetris
             return gameBitmap.ToString();
         }
 
+        /// <returns>returns true if dropped / false if landed</returns>
         internal bool CurrentPieceDropOneStep()
         {
-            this.CurrentPieceLocation.Y--;
-
             if (this.CurrentPieceLocation.Y == 0)
             {
                 TransferToWell(this.CurrentPiece);
                 NextPiece();
                 return false;
             }
+            else
+            {
+                this.CurrentPieceLocation.Y--;
 
-            return true;
+                return true;
+            }
         }
 
         internal void MoveLeft()

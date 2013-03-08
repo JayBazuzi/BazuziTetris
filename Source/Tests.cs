@@ -57,7 +57,7 @@ namespace BazuziTetris
             Assert.Equal(16, game.CurrentPieceLocation.Y);
             Assert.Equal(5, game.CurrentPieceLocation.X);
 
-            foreach (var i in Enumerable.Range(0, 16)) game.CurrentPieceDropOneStep();
+            foreach (var i in Enumerable.Range(0, 17)) game.CurrentPieceDropOneStep();
 
             Assert.Equal(16, game.CurrentPieceLocation.Y);
             Assert.Equal(5, game.CurrentPieceLocation.X);
