@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BazuziTetris
 {
-    struct Location
+    class Location
     {
         public Location(int x, int y)
         {
