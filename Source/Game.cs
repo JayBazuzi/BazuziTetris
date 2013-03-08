@@ -8,16 +8,16 @@ namespace BazuziTetris
     {
         public Piece CurrentPiece;
 
-        public readonly Well Well = new Well();
+        public readonly Bitmap Well = new Bitmap(10, 20);
 
         public Game()
         {
-            this.CurrentPiece = new Piece.I(new Location(16, 5));
+            this.CurrentPiece = new Piece.I(new Location(5, 16));
         }
 
         public void OnTick()
         {
-            if (this.CurrentPiece.Location.X == 0)
+            if (this.CurrentPiece.Location.Y == 0)
             {
                 TransferToWell(this.CurrentPiece);
             }
@@ -30,7 +30,7 @@ namespace BazuziTetris
 
         internal void DropAllTheWay()
         {
-            while (this.CurrentPiece.Location.X > 0)
+            while (this.CurrentPiece.Location.Y > 0)
             {
                 this.CurrentPiece.DropOneStep();
             }
@@ -40,10 +40,14 @@ namespace BazuziTetris
 
         void TransferToWell(Piece piece)
         {
-            foreach (var x in Enumerable.Range(0, piece.Bitmap.GetLength(0)))
-                foreach (var y in Enumerable.Range(0, piece.Bitmap.GetLength(1)))
-                    if (piece.Bitmap[x, y])
-                        this.Well[x + piece.Location.X, y + piece.Location.Y] = true;
+            this.Well.Overlay(piece.Bitmap, piece.Location);
+        }
+
+        public override string ToString()
+        {
+            var gameBitmap = this.Well.Copy();
+            gameBitmap.Overlay(this.CurrentPiece.Bitmap, this.CurrentPiece.Location);
+            return gameBitmap.ToString();
         }
     }
 }

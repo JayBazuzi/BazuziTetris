@@ -23,14 +23,14 @@ namespace BazuziTetris
             {
                 foreach (int y in game.Well.VerticalRange)
                 {
-                    if (x < 4 && y == 5)
+                    if (x == 5 && y < 4)
                     {
-                        Assert.True(game.Well[x, y]);
+                        Assert.True(game.Well[x, y], string.Format("x = {0}, y = {1}, \r\n\r\n{2}", x, y, game.Well.ToString()));
                     }
 
                     else
                     {
-                        Assert.False(game.Well[x, y]);
+                        Assert.False(game.Well[x, y], game.Well.ToString());
                     }
                 }
 
@@ -41,9 +41,9 @@ namespace BazuziTetris
         public void PieceShouldDropOneOnTick()
         {
             Game game = new Game();
-            Assert.Equal(16, game.CurrentPiece.Location.X);
+            Assert.Equal(16, game.CurrentPiece.Location.Y);
             game.OnTick();
-            Assert.Equal(15, game.CurrentPiece.Location.X);
+            Assert.Equal(15, game.CurrentPiece.Location.Y);
         }
     }
 }
