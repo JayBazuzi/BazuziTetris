@@ -33,6 +33,14 @@ namespace BazuziTetris
                     case ConsoleKey.UpArrow:
                         game.CurrentPiece.Rotate();
                         break;
+
+                    case ConsoleKey.LeftArrow:
+                        game.MoveLeft();
+                        break;
+
+                    case ConsoleKey.RightArrow:
+                        game.MoveRight();
+                        break;
                 }
 
             } while (true);

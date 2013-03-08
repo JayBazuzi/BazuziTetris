@@ -57,5 +57,15 @@ namespace BazuziTetris
         {
             this.CurrentPieceLocation.Y--;
         }
+
+        internal void MoveLeft()
+        {
+            this.CurrentPieceLocation.X--;
+        }
+
+        internal void MoveRight()
+        {
+            this.CurrentPieceLocation.X++;
+        }
     }
 }

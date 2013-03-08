@@ -38,6 +38,15 @@ namespace BazuziTetris
         }
 
         [Fact]
+        public void MoveLeft()
+        {
+            Game game = new Game();
+            Assert.Equal(5, game.CurrentPieceLocation.X);
+            game.MoveLeft();
+            Assert.Equal(4, game.CurrentPieceLocation.X);
+        }
+
+        [Fact]
         public void PieceShouldDropOneOnTick()
         {
             Game game = new Game();
@@ -64,7 +73,6 @@ namespace BazuziTetris
             foreach (var x in piece.Bitmap.HorizontalRange)
                 foreach (var y in piece.Bitmap.VerticalRange)
                     Assert.True(piece.Bitmap[x, y]);
-
         }
     }
 }
