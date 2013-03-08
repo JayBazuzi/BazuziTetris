@@ -8,10 +8,9 @@ namespace BazuziTetris
         public void WellShouldStartEmpty()
         {
             Game game = new Game();
-            foreach (var item in game.Well.Cells)
-            {
-                Assert.False(item);
-            }
+            foreach (var x in game.Well.HorizontalRange)
+                foreach (var y in game.Well.VerticalRange)
+                    Assert.False(game.Well[x, y]);
         }
 
         [Fact]
@@ -20,18 +19,18 @@ namespace BazuziTetris
             Game game = new Game();
             game.DropAllTheWay();
 
-            for (int x = 0; x < game.Well.Cells.GetLength(0); x++)
+            foreach (int x in game.Well.HorizontalRange)
             {
-                for (int y = 0; y < game.Well.Cells.GetLength(1); y++)
+                foreach (int y in game.Well.VerticalRange)
                 {
                     if (x < 4 && y == 5)
                     {
-                        Assert.True(game.Well.Cells[x, y]);
+                        Assert.True(game.Well[x, y]);
                     }
 
                     else
                     {
-                        Assert.False(game.Well.Cells[x, y]);
+                        Assert.False(game.Well[x, y]);
                     }
                 }
 

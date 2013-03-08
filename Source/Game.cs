@@ -1,4 +1,8 @@
-﻿namespace BazuziTetris
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace BazuziTetris
 {
     class Game
     {
@@ -15,7 +19,7 @@
         {
             if (this.CurrentPiece.Location.X == 0)
             {
-                this.CurrentPiece.TransferToWell(this.Well);
+                TransferToWell(this.CurrentPiece);
             }
 
             else
@@ -31,7 +35,15 @@
                 this.CurrentPiece.DropOneStep();
             }
 
-            this.CurrentPiece.TransferToWell(this.Well);
+            TransferToWell(this.CurrentPiece);
+        }
+
+        void TransferToWell(Piece piece)
+        {
+            foreach (var x in Enumerable.Range(0, piece.Bitmap.GetLength(0)))
+                foreach (var y in Enumerable.Range(0, piece.Bitmap.GetLength(1)))
+                    if (piece.Bitmap[x, y])
+                        this.Well[x + piece.Location.X, y + piece.Location.Y] = true;
         }
     }
 }

@@ -5,26 +5,26 @@
     /// </summary>
     abstract class Piece
     {
-        protected Piece(Location location)
+        protected Piece(Location location, bool[,] bitmap)
         {
             this.Location = location;
+            this.Bitmap = bitmap;
         }
 
         public Location Location;
+        public readonly bool[,] Bitmap;
 
         public class I : Piece
         {
             public I(Location location)
-                : base(location)
+                : base(location, new bool[4, 1]
+                    {
+                        {true},
+                        {true},
+                        {true},
+                        {true},
+                    })
             {
-            }
-
-            public override void TransferToWell(Well well)
-            {
-                well.Cells[this.Location.X + 0, this.Location.Y] = true;
-                well.Cells[this.Location.X + 1, this.Location.Y] = true;
-                well.Cells[this.Location.X + 2, this.Location.Y] = true;
-                well.Cells[this.Location.X + 3, this.Location.Y] = true;
             }
         }
 
@@ -32,7 +32,5 @@
         {
             this.Location.X--;
         }
-
-        public abstract void TransferToWell(Well well);
     }
 }
