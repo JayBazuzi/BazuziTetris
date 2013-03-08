@@ -37,6 +37,19 @@ namespace BazuziTetris
         }
 
         [Fact]
+        public void DropGivesNewPiece()
+        {
+            Game game = new Game();
+            Assert.Equal(16, game.CurrentPieceLocation.Y);
+            Assert.Equal(5, game.CurrentPieceLocation.X);
+
+            game.DropAllTheWay();
+
+            Assert.Equal(16, game.CurrentPieceLocation.Y);
+            Assert.Equal(5, game.CurrentPieceLocation.X);
+        }
+
+        [Fact]
         public void MoveLeft()
         {
             Game game = new Game();

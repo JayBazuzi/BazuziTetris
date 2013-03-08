@@ -33,8 +33,7 @@ namespace BazuziTetris
         public Game(IEnumerable<Piece> pieces)
         {
             this.comingPieces = pieces;
-            this.CurrentPiece = comingPieces.First(); comingPieces = comingPieces.Skip(1);
-            this.CurrentPieceLocation = new Location(5, 16);
+            NextPiece();
         }
 
         public void OnTick()
@@ -58,6 +57,13 @@ namespace BazuziTetris
             }
 
             TransferToWell(this.CurrentPiece);
+            NextPiece();
+        }
+
+        private void NextPiece()
+        {
+            this.CurrentPiece = comingPieces.First(); comingPieces = comingPieces.Skip(1);
+            this.CurrentPieceLocation = new Location(5, 16);
         }
 
         void TransferToWell(Piece piece)
