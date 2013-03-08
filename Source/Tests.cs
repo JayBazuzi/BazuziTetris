@@ -45,5 +45,26 @@ namespace BazuziTetris
             game.OnTick();
             Assert.Equal(15, game.CurrentPieceLocation.Y);
         }
+
+        [Fact]
+        public void RotateIPieceTest()
+        {
+            var piece = new Piece.I();
+
+            Assert.Equal(1, piece.Bitmap.Width);
+            Assert.Equal(4, piece.Bitmap.Height);
+            foreach (var x in piece.Bitmap.HorizontalRange)
+                foreach (var y in piece.Bitmap.VerticalRange)
+                    Assert.True(piece.Bitmap[x, y]);
+
+            piece.Rotate();
+
+            Assert.Equal(1, piece.Bitmap.Height);
+            Assert.Equal(4, piece.Bitmap.Width);
+            foreach (var x in piece.Bitmap.HorizontalRange)
+                foreach (var y in piece.Bitmap.VerticalRange)
+                    Assert.True(piece.Bitmap[x, y]);
+
+        }
     }
 }

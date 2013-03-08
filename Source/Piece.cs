@@ -10,7 +10,7 @@
             this.Bitmap = bitmap;
         }
 
-        public readonly Bitmap Bitmap;
+        public Bitmap Bitmap { get; private set; }
 
         public class I : Piece
         {
@@ -29,6 +29,17 @@
                 : base(s_bitmap.Copy())
             {
             }
+        }
+
+        public void Rotate()
+        {
+            Bitmap newBitmap = new Bitmap(this.Bitmap.Height, this.Bitmap.Width);
+
+            foreach (var x in Bitmap.HorizontalRange)
+                foreach (var y in Bitmap.VerticalRange)
+                    newBitmap[this.Bitmap.Height - y - 1, x] = Bitmap[x, y];
+
+            this.Bitmap = newBitmap;
         }
     }
 }
