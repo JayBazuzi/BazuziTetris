@@ -85,12 +85,14 @@ namespace BazuziTetris
 
         internal void MoveLeft()
         {
-            this.CurrentPieceLocation.X--;
+            if (this.CurrentPieceLocation.X > 0)
+                this.CurrentPieceLocation.X--;
         }
 
         internal void MoveRight()
         {
-            this.CurrentPieceLocation.X++;
+            if (this.CurrentPieceLocation.X + this.CurrentPiece.Bitmap.Width < this.Well.Width)
+                this.CurrentPieceLocation.X++;
         }
     }
 }
