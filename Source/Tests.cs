@@ -42,6 +42,7 @@ namespace BazuziTetris
         public void PieceShouldDropOneOnTick()
         {
             Game game = new Game();
+            Assert.Equal(16, game.CurrentPiece.Location.X);
             game.OnTick();
             Assert.Equal(15, game.CurrentPiece.Location.X);
         }
