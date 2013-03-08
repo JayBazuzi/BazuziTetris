@@ -17,7 +17,7 @@
         public class I : Piece
         {
             public I(Location location)
-                : base(location, 1,4)
+                : base(location, 1, 4)
             {
                 this.Bitmap[0, 0] = true;
                 this.Bitmap[0, 1] = true;
