@@ -18,7 +18,7 @@ namespace BazuziTetris
         [Fact]
         public void DropIIntoWell()
         {
-            Game game = new Game();
+            Game game = new Game(new Piece[] { new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I() });
             game.DropAllTheWay();
 
             foreach (int x in game.Well.HorizontalRange)

@@ -16,12 +16,19 @@ namespace BazuziTetris
         {
             public IEnumerator<Piece> GetEnumerator()
             {
+                var random = new Random(0);
                 while (true)
                 {
-                    yield return new Piece.I();
-                    yield return new Piece.Box();
-                    yield return new Piece.J();
-                    yield return new Piece.L();
+                    // shuffling is hard. I'm pretending it isn't.
+                    var r = random.Next();
+                    if (r < 1000)
+                        yield return new Piece.I();
+                    else if (r < 2000)
+                        yield return new Piece.Box();
+                    else if (r < 3000)
+                        yield return new Piece.J();
+                    else if (r < 4000)
+                        yield return new Piece.L();
                 }
             }
 
