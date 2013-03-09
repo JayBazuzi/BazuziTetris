@@ -57,6 +57,27 @@ namespace BazuziTetris
         void TransferToWell(Piece piece)
         {
             this.Well = this.Well.Union(piece.Bitmap, this.CurrentPieceLocation);
+
+            var newBitmap = new bool[this.Well.Width, this.Well.Height];
+
+            int erasedLines = 0;
+            for (int y = 0; y < this.Well.Height; y++)
+            {
+                bool all = true;
+                foreach (var x in this.Well.HorizontalRange) all &= this.Well[x, y];
+
+                if (all)
+                {
+                    erasedLines++;
+                }
+                else
+                {
+                    foreach (var x in this.Well.HorizontalRange)
+                        newBitmap[x, y - erasedLines] = this.Well[x, y];
+                }
+            }
+
+            this.Well = new Bitmap(newBitmap);
         }
 
         public override string ToString()

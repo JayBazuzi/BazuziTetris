@@ -39,6 +39,36 @@ namespace BazuziTetris
         }
 
         [Fact]
+        public void FullRowDisappears()
+        {
+            Game game = new Game();
+            game.DropAllTheWay();
+
+            game.MoveLeft();
+            game.DropAllTheWay();
+
+            game.CurrentPieceRotate();
+            game.MoveRight();
+            game.MoveRight();
+            game.MoveRight();
+            game.MoveRight();
+            game.DropAllTheWay();
+
+            game.CurrentPieceRotate();
+            game.MoveLeft();
+            game.MoveLeft();
+            game.MoveLeft();
+            game.MoveLeft();
+            game.MoveLeft();
+
+            Assert.True(game.Well[9, 0], game.ToString());
+
+            game.DropAllTheWay();
+
+            Assert.False(game.Well[9, 0], game.ToString());
+        }
+
+        [Fact]
         public void DropGivesNewPiece()
         {
             Game game = new Game();
