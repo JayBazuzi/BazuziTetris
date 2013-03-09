@@ -9,13 +9,23 @@ namespace BazuziTetris
         public readonly int Width;
         public readonly int Height;
 
-        readonly bool[,] _cells;
+        readonly IReadOnlyList<IReadOnlyList<bool>> _cells;
 
-        public Bitmap(int width, int height)
+        public Bitmap(bool[,] values)
         {
-            this.Width = width;
-            this.Height = height;
-            this._cells = new bool[Width, Height];
+            this.Width = values.GetLength(0);
+            this.Height = values.GetLength(1);
+            var cells = new List<List<bool>>();
+            foreach (var x in HorizontalRange)
+            {
+                cells.Add(new List<bool>());
+
+                foreach (var y in VerticalRange)
+                {
+                    cells[x].Add(values[x, y]);
+                }
+            }
+            this._cells = cells;
         }
 
         public IEnumerable<int> HorizontalRange { get { return Enumerable.Range(0, Width); } }
@@ -23,8 +33,7 @@ namespace BazuziTetris
 
         public bool this[int horizontalIndex, int verticalIndex]
         {
-            get { return this._cells[horizontalIndex, verticalIndex]; }
-            set { this._cells[horizontalIndex, verticalIndex] = value; }
+            get { return this._cells[horizontalIndex][verticalIndex]; }
         }
 
         public override string ToString()
@@ -36,7 +45,7 @@ namespace BazuziTetris
                 stringBuilder.Append(string.Format("{0,2} ", y));
                 foreach (var x in HorizontalRange)
                 {
-                    stringBuilder.Append(this._cells[x, y] ? 'X' : '.');
+                    stringBuilder.Append(this._cells[x][y] ? 'X' : '.');
                 }
                 stringBuilder.AppendLine();
             }
@@ -45,19 +54,32 @@ namespace BazuziTetris
             return stringBuilder.ToString();
         }
 
-        public void Overlay(Bitmap bitmap, Location location)
+        public Bitmap Union(Bitmap bitmap, Location location)
         {
+            var newValues = new bool[this.Width, this.Height];
+
+            // first, copy in to a mutable array
+            foreach (var x in HorizontalRange)
+                foreach (var y in VerticalRange)
+                        newValues[x, y] = this[x, y];
+
+            // Second, insert the other bitmal
             foreach (var x in bitmap.HorizontalRange)
                 foreach (var y in bitmap.VerticalRange)
-                    if (bitmap[x, y])
-                        this[x + location.X, y + location.Y] = true;
+                    newValues[x + location.X, y + location.Y] |= bitmap[x, y];
+
+            return new Bitmap(newValues);
         }
 
-        public Bitmap Copy()
+        internal Bitmap Rotate()
         {
-            var newBitmap = new Bitmap(this.Width, this.Height);
-            newBitmap.Overlay(this, new Location(0, 0));
-            return newBitmap;
+            var newValues = new bool[this.Height, this.Width];
+
+            foreach (var x in HorizontalRange)
+                foreach (var y in VerticalRange)
+                    newValues[this.Height - y - 1, x] = this[x, y];
+
+            return new Bitmap(newValues);
         }
     }
 }

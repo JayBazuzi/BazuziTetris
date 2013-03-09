@@ -10,7 +10,7 @@ namespace BazuziTetris
 
         public Location CurrentPieceLocation;
 
-        public readonly Bitmap Well = new Bitmap(10, 20);
+        public Bitmap Well = new Bitmap(new bool[10, 20]);
 
         class PieceStream : IEnumerable<Piece>
         {
@@ -56,13 +56,12 @@ namespace BazuziTetris
 
         void TransferToWell(Piece piece)
         {
-            this.Well.Overlay(piece.Bitmap, this.CurrentPieceLocation);
+            this.Well = this.Well.Union(piece.Bitmap, this.CurrentPieceLocation);
         }
 
         public override string ToString()
         {
-            var gameBitmap = this.Well.Copy();
-            gameBitmap.Overlay(this.CurrentPiece.Bitmap, this.CurrentPieceLocation);
+            var gameBitmap = this.Well.Union(this.CurrentPiece.Bitmap, this.CurrentPieceLocation);
             return gameBitmap.ToString();
         }
 

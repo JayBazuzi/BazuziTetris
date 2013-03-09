@@ -14,32 +14,27 @@
 
         public class I : Piece
         {
-            static Bitmap s_bitmap;
+            static readonly Bitmap s_bitmap;
 
             static I()
             {
-                s_bitmap = new Bitmap(1, 4);
-                s_bitmap[0, 0] = true;
-                s_bitmap[0, 1] = true;
-                s_bitmap[0, 2] = true;
-                s_bitmap[0, 3] = true;
+                s_bitmap = new Bitmap(new bool[,] {{
+                    true,
+                    true,
+                    true,
+                    true,
+                    }});
             }
 
             public I()
-                : base(s_bitmap.Copy())
+                : base(s_bitmap)
             {
             }
         }
 
         public void Rotate()
         {
-            Bitmap newBitmap = new Bitmap(this.Bitmap.Height, this.Bitmap.Width);
-
-            foreach (var x in Bitmap.HorizontalRange)
-                foreach (var y in Bitmap.VerticalRange)
-                    newBitmap[this.Bitmap.Height - y - 1, x] = Bitmap[x, y];
-
-            this.Bitmap = newBitmap;
+            this.Bitmap = this.Bitmap.Rotate();
         }
     }
 }

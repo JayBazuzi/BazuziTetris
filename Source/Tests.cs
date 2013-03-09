@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace BazuziTetris
@@ -99,6 +100,55 @@ namespace BazuziTetris
             foreach (var x in piece.Bitmap.HorizontalRange)
                 foreach (var y in piece.Bitmap.VerticalRange)
                     Assert.True(piece.Bitmap[x, y]);
+        }
+
+        [Fact]
+        public void BitmapUnionTest()
+        {
+            var bitmap1 = new Bitmap(new bool[3, 3]
+                {
+                    {true,  false,  false},
+                    {false, true,   false},
+                    {false, false,  false},
+                });
+
+            var bitmap2 = new Bitmap(new bool[2, 2]
+                {
+                    {true,  true},
+                    {false, false},
+                });
+
+            var resultBitmap = bitmap1.Union(bitmap2, new Location(1, 1));
+
+            var expectedBitmap = new Bitmap(new bool[3, 3]
+                {
+                    {true,  false,  false},
+                    {false, true,   true},
+                    {false, false,  false},
+                });
+
+            Assert.Equal(expectedBitmap, resultBitmap, new BitmapComparer());
+        }
+
+        class BitmapComparer : IEqualityComparer<Bitmap>
+        {
+            bool IEqualityComparer<Bitmap>.Equals(Bitmap bitmap1, Bitmap bitmap2)
+            {
+                if (bitmap1.Width != bitmap2.Width) return false;
+                if (bitmap1.Height != bitmap2.Height) return false;
+
+                foreach (var x in bitmap1.HorizontalRange)
+                    foreach (var y in bitmap1.VerticalRange)
+                        if (bitmap1[x, y] != bitmap2[x, y])
+                            return false;
+
+                return true;
+            }
+
+            int IEqualityComparer<Bitmap>.GetHashCode(Bitmap obj)
+            {
+                return obj.GetHashCode();
+            }
         }
     }
 }
