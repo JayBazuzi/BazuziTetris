@@ -61,7 +61,7 @@ namespace BazuziTetris
             // first, copy in to a mutable array
             foreach (var x in HorizontalRange)
                 foreach (var y in VerticalRange)
-                        newValues[x, y] = this[x, y];
+                    newValues[x, y] = this[x, y];
 
             // Second, insert the other bitmal
             foreach (var x in bitmap.HorizontalRange)

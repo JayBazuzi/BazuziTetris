@@ -32,7 +32,7 @@ namespace BazuziTetris
                         break;
 
                     case ConsoleKey.UpArrow:
-                        game.CurrentPiece.Rotate();
+                        game.CurrentPieceRotate();
                         break;
 
                     case ConsoleKey.LeftArrow:

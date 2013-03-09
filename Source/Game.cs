@@ -106,5 +106,29 @@ namespace BazuziTetris
             if (this.CurrentPieceLocation.X + this.CurrentPiece.Bitmap.Width < this.Well.Width)
                 this.CurrentPieceLocation.X++;
         }
+
+        internal bool CurrentPieceRotate()
+        {
+            if (!CanRotate()) return false;
+
+            this.CurrentPiece.Rotate();
+            return true;
+        }
+
+        private bool CanRotate()
+        {
+            var rotated = this.CurrentPiece.Bitmap.Rotate();
+            if (this.Well.Width < this.CurrentPieceLocation.X + rotated.Width) return false;
+
+            Bitmap collision = this.Well.Intersection(rotated, this.CurrentPieceLocation);
+
+            // TODO: Use IEnumerable.Any()
+            foreach (var x in collision.HorizontalRange)
+                foreach (var y in collision.VerticalRange)
+                    if (collision[x, y])
+                        return false;
+
+            return true;
+        }
     }
 }

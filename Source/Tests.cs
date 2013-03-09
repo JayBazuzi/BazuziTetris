@@ -154,6 +154,18 @@ namespace BazuziTetris
             }
         }
 
+        [Fact]
+        public void RotateCollisionTest()
+        {
+            Game game = new Game();
+            game.DropAllTheWay();
+            Assert.True(game.CurrentPieceRotate());
+            game.CurrentPieceRotate();
+            game.MoveLeft();
+            foreach (var i in Enumerable.Range(0, 14)) game.CurrentPieceDropOneStep();
+            Assert.False(game.CurrentPieceRotate());
+        }
+
         class BitmapComparer : IEqualityComparer<Bitmap>
         {
             bool IEqualityComparer<Bitmap>.Equals(Bitmap bitmap1, Bitmap bitmap2)
