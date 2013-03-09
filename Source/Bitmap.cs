@@ -81,5 +81,16 @@ namespace BazuziTetris
 
             return new Bitmap(newValues);
         }
+
+        internal Bitmap Intersection(Bitmap bitmap, Location location)
+        {
+            var newValues = new bool[this.Width, this.Height];
+
+            foreach (var x in bitmap.HorizontalRange)
+                foreach (var y in bitmap.VerticalRange)
+                    newValues[x + location.X, y + location.Y] = bitmap[x, y] && this[x + location.X, y + location.Y];
+
+            return new Bitmap(newValues);
+        }
     }
 }

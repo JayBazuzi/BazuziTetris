@@ -68,7 +68,7 @@ namespace BazuziTetris
         /// <returns>returns true if dropped / false if landed</returns>
         internal bool CurrentPieceDropOneStep()
         {
-            if (this.CurrentPieceLocation.Y == 0)
+            if (this.CurrentPieceLocation.Y == 0 || CanDrop())
             {
                 TransferToWell(this.CurrentPiece);
                 NextPiece();
@@ -80,6 +80,19 @@ namespace BazuziTetris
 
                 return true;
             }
+        }
+
+        private bool CanDrop()
+        {
+            Bitmap collision = this.Well.Intersection(this.CurrentPiece.Bitmap, new Location(this.CurrentPieceLocation.X, this.CurrentPieceLocation.Y - 1));
+
+            // TODO: Use IEnumerable.Any()
+            foreach (var x in collision.HorizontalRange)
+                foreach (var y in collision.VerticalRange)
+                    if (collision[x, y])
+                        return true;
+
+            return false;
         }
 
         internal void MoveLeft()

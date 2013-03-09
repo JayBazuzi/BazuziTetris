@@ -130,6 +130,30 @@ namespace BazuziTetris
             Assert.Equal(expectedBitmap, resultBitmap, new BitmapComparer());
         }
 
+        [Fact]
+        public void LandOnAnotherPieceTest()
+        {
+            Game game = new Game();
+            game.DropAllTheWay();
+            game.DropAllTheWay();
+
+            foreach (int x in game.Well.HorizontalRange)
+            {
+                foreach (int y in game.Well.VerticalRange)
+                {
+                    if (x == 5 && y < 8)
+                    {
+                        Assert.True(game.Well[x, y], string.Format("x = {0}, y = {1}, \r\n\r\n{2}", x, y, game.Well.ToString()));
+                    }
+
+                    else
+                    {
+                        Assert.False(game.Well[x, y], game.Well.ToString());
+                    }
+                }
+            }
+        }
+
         class BitmapComparer : IEqualityComparer<Bitmap>
         {
             bool IEqualityComparer<Bitmap>.Equals(Bitmap bitmap1, Bitmap bitmap2)

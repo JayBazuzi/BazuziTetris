@@ -12,6 +12,7 @@ namespace BazuziTetris
         static void Main(string[] args)
         {
             Game game = new Game();
+
             do
             {
                 Console.Clear();
