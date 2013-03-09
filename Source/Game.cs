@@ -17,7 +17,12 @@ namespace BazuziTetris
             public IEnumerator<Piece> GetEnumerator()
             {
                 while (true)
+                {
                     yield return new Piece.I();
+                    yield return new Piece.Box();
+                    yield return new Piece.J();
+                    yield return new Piece.L();
+                }
             }
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()

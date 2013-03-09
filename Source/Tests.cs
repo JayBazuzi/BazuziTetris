@@ -41,7 +41,7 @@ namespace BazuziTetris
         [Fact]
         public void FullRowDisappears()
         {
-            Game game = new Game();
+            Game game = new Game(new Piece[] { new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I() });
             game.DropAllTheWay();
 
             game.MoveLeft();
@@ -71,7 +71,7 @@ namespace BazuziTetris
         [Fact]
         public void DropGivesNewPiece()
         {
-            Game game = new Game();
+            Game game = new Game(new Piece[] { new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I() });
             Assert.Equal(16, game.CurrentPieceLocation.Y);
             Assert.Equal(5, game.CurrentPieceLocation.X);
 
@@ -84,7 +84,7 @@ namespace BazuziTetris
         [Fact]
         public void SlowDropGivesNewPiece()
         {
-            Game game = new Game();
+            Game game = new Game(new Piece[] { new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I() });
             Assert.Equal(16, game.CurrentPieceLocation.Y);
             Assert.Equal(5, game.CurrentPieceLocation.X);
 
@@ -97,7 +97,7 @@ namespace BazuziTetris
         [Fact]
         public void MoveLeft()
         {
-            Game game = new Game();
+            Game game = new Game(new Piece[] { new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I() });
             Assert.Equal(5, game.CurrentPieceLocation.X);
             game.MoveLeft();
             Assert.Equal(4, game.CurrentPieceLocation.X);
@@ -106,7 +106,7 @@ namespace BazuziTetris
         [Fact]
         public void PieceShouldDropOneOnTick()
         {
-            Game game = new Game();
+            Game game = new Game(new Piece[] { new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I() });
             Assert.Equal(16, game.CurrentPieceLocation.Y);
             game.OnTick();
             Assert.Equal(15, game.CurrentPieceLocation.Y);
@@ -163,7 +163,7 @@ namespace BazuziTetris
         [Fact]
         public void LandOnAnotherPieceTest()
         {
-            Game game = new Game();
+            Game game = new Game(new Piece[] { new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I() });
             game.DropAllTheWay();
             game.DropAllTheWay();
 
@@ -187,7 +187,7 @@ namespace BazuziTetris
         [Fact]
         public void RotateCollisionTest()
         {
-            Game game = new Game();
+            Game game = new Game(new Piece[] { new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I() });
             game.DropAllTheWay();
             Assert.True(game.CurrentPieceRotate());
             game.CurrentPieceRotate();
@@ -212,7 +212,7 @@ namespace BazuziTetris
         [Fact]
         public void RightPieceCollisionTest()
         {
-            Game game = new Game();
+            Game game = new Game(new Piece[] { new Piece.I(), new Piece.I(), new Piece.I(), new Piece.I() });
             game.DropAllTheWay();
             game.MoveLeft();
             foreach (var i in Enumerable.Range(0, 14)) game.CurrentPieceDropOneStep();
