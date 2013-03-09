@@ -68,31 +68,19 @@ namespace BazuziTetris
         /// <returns>returns true if dropped / false if landed</returns>
         internal bool CurrentPieceDropOneStep()
         {
-            if (this.CurrentPieceLocation.Y == 0 || CanDrop())
-            {
-                TransferToWell(this.CurrentPiece);
-                NextPiece();
-                return false;
-            }
-            else
+            var newLocation = new Location(this.CurrentPieceLocation.X, this.CurrentPieceLocation.Y - 1);
+            if (Allowed(this.CurrentPiece.Bitmap, newLocation))
             {
                 this.CurrentPieceLocation.Y--;
 
                 return true;
             }
-        }
-
-        private bool CanDrop()
-        {
-            Bitmap collision = this.Well.Intersection(this.CurrentPiece.Bitmap, new Location(this.CurrentPieceLocation.X, this.CurrentPieceLocation.Y - 1));
-
-            // TODO: Use IEnumerable.Any()
-            foreach (var x in collision.HorizontalRange)
-                foreach (var y in collision.VerticalRange)
-                    if (collision[x, y])
-                        return true;
-
-            return false;
+            else
+            {
+                TransferToWell(this.CurrentPiece);
+                NextPiece();
+                return false;
+            }
         }
 
         internal void MoveLeft()
@@ -101,10 +89,16 @@ namespace BazuziTetris
                 this.CurrentPieceLocation.X--;
         }
 
-        internal void MoveRight()
+        internal bool MoveRight()
         {
-            if (this.CurrentPieceLocation.X + this.CurrentPiece.Bitmap.Width < this.Well.Width)
+            var newLocation = new Location(this.CurrentPieceLocation.X + 1, this.CurrentPieceLocation.Y);
+            if (Allowed(this.CurrentPiece.Bitmap, newLocation))
+            {
                 this.CurrentPieceLocation.X++;
+                return true;
+            }
+
+            else return false;
         }
 
         internal bool CurrentPieceRotate()
@@ -118,17 +112,33 @@ namespace BazuziTetris
         private bool CanRotate()
         {
             var rotated = this.CurrentPiece.Bitmap.Rotate();
-            if (this.Well.Width < this.CurrentPieceLocation.X + rotated.Width) return false;
+            return Allowed(rotated, this.CurrentPieceLocation);
+        }
 
-            Bitmap collision = this.Well.Intersection(rotated, this.CurrentPieceLocation);
+        private bool Allowed(Bitmap bitmap, Location location)
+        {
+            return WithinWell(bitmap, location) && !Collision(bitmap, location);
+        }
+
+        bool WithinWell(Bitmap bitmap, Location location)
+        {
+            return location.X >= 0 &&
+                location.Y >= 0 &&
+                location.X + bitmap.Width <= this.Well.Width &&
+                location.Y + bitmap.Height <= this.Well.Height;
+        }
+
+        bool Collision(Bitmap bitmap, Location location)
+        {
+            Bitmap collisionMap = this.Well.Intersection(bitmap, location);
 
             // TODO: Use IEnumerable.Any()
-            foreach (var x in collision.HorizontalRange)
-                foreach (var y in collision.VerticalRange)
-                    if (collision[x, y])
-                        return false;
+            foreach (var x in collisionMap.HorizontalRange)
+                foreach (var y in collisionMap.VerticalRange)
+                    if (collisionMap[x, y])
+                        return true;
 
-            return true;
+            return false;
         }
     }
 }
