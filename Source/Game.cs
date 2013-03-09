@@ -68,10 +68,10 @@ namespace BazuziTetris
         /// <returns>returns true if dropped / false if landed</returns>
         internal bool CurrentPieceDropOneStep()
         {
-            var newLocation = new Location(this.CurrentPieceLocation.X, this.CurrentPieceLocation.Y - 1);
+            var newLocation = this.CurrentPieceLocation.DownOne();
             if (Allowed(this.CurrentPiece.Bitmap, newLocation))
             {
-                this.CurrentPieceLocation.Y--;
+                this.CurrentPieceLocation = newLocation;
 
                 return true;
             }
@@ -83,18 +83,26 @@ namespace BazuziTetris
             }
         }
 
-        internal void MoveLeft()
+        internal bool MoveLeft()
         {
-            if (this.CurrentPieceLocation.X > 0)
-                this.CurrentPieceLocation.X--;
+            var newLocation = this.CurrentPieceLocation.LeftOne();
+            if (Allowed(this.CurrentPiece.Bitmap, newLocation))
+            {
+                this.CurrentPieceLocation = newLocation;
+
+                return true;
+            }
+
+            else return false;
         }
 
         internal bool MoveRight()
         {
-            var newLocation = new Location(this.CurrentPieceLocation.X + 1, this.CurrentPieceLocation.Y);
+            var newLocation = this.CurrentPieceLocation.RightOne();
             if (Allowed(this.CurrentPiece.Bitmap, newLocation))
             {
-                this.CurrentPieceLocation.X++;
+                this.CurrentPieceLocation = newLocation;
+
                 return true;
             }
 

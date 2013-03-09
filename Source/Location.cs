@@ -13,7 +13,22 @@ namespace BazuziTetris
             this.Y = y;
         }
 
-        public int X;
-        public int Y;
+        public readonly int X;
+        public readonly int Y;
+
+        public Location DownOne()
+        {
+            return new Location(this.X, this.Y - 1);
+        }
+
+        public Location LeftOne()
+        {
+            return new Location(this.X - 1, this.Y);
+        }
+
+        public Location RightOne()
+        {
+            return new Location(this.X + 1, this.Y);
+        }
     }
 }
